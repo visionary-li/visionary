@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zn-ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body,div,p,input{
+            margin: 0;
+            padding: 0;
+        }
+        #wrap{
+           width: 600px; 
+           height: 400px;
+           margin: 0 auto;
+           margin-top: 60px;
+           border-radius: 7px;
+           border: 1px solid #eee;
+        }
+        #wrap .top{
+            width: 550px;
+            height: 50px;
+            margin:30px auto;
+
+        }
+        #wrap .top input{
+            margin:0 5px;
+            outline: none;
+        }
+        #wrap .top input[type="text"]{
+            width: 160px;
+            height: 36px;
+            text-indent: 6px;
+            
+            border:1px solid #ddd;
+        }
+        #wrap .top input[type="button"]{
+            width: 50px;
+            height: 40px;
+        }
+        #wrap .bottom{
+            width: 550px;
+            height: 100%;
+            margin: 15px auto;
+        }
+        #wrap .bottom p{
+            letter-spacing: 2px;
+            text-indent: 2em;
+            line-height: 1.6em;
+        }
+        #wrap .bottom b{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div class="top">
+            <input type="text" placeholder="搜索内容">
+            <input type="button" value="搜索">
+            <input type="text" placeholder="替换文本">
+            <input type="button" value="替换">
+            <input type="button" value="重置">
+        </div>
+        <div class="bottom">
+            <p>张家界，原名“大庸市”，湖南省地级市。辖2个市辖区（永定区、武陵源区）、2个县（慈利县、桑植县）。位于湖南西北部，澧水中上游，属武陵山区腹地。 [1]  张家界因旅游建市，是中国最重要的旅游城市之一，是湘鄂渝黔革命根据地的发源地和中心区域。</p>
+            <p>1982年9月，张家界国家森林公园成为中国第一个国家森林公园。</p>
+            <p>1988年8月，张家界武陵源风景名胜区被列入国家重点风景名胜区；1992年，由张家界国家森林公园等三大景区构成的武陵源风景名胜区被联合国教科文组织列入《世界自然遗产名录》；2004年2月，被列入全球首批《世界地质公园》；2007年，被列入中国首批国家5A级旅游景区。 [2]  2017年，被授予“国家森林城市”荣誉称号。</p>
+        </div>
+    </div>
+    <script>
+        (function(){
+            //获取节点
+            let oTot = document.querySelectorAll("#wrap .top input");
+            let oBop = document.querySelectorAll("#wrap .bottom p");
+            
+            //为了方便重置，我们需要提前存储初始内容
+            let arr = [];
+            oBop.forEach(function(ele){
+                arr.push(ele.innerText);
+            });
+            console.log(arr);
+
+            //搜索按钮的点击
+            oTot[1].onclick = function(){
+               //获取第一个输入框里面的内容
+               let val = oTot[0].value;
+               //判断，如果没有内容就不继续向下执行
+               if(!val)return;
+               //有内容就要进行替换
+               oBop.forEach(function(ele){
+                    ele.innerHTML = ele.innerText.split(val).join(`<b>${val}</b>`);               
+               });
+               //清除输入框的内容
+               oTot[0].value = "";
+            }
+            //替换按钮的点击
+            oTot[3].onclick = function(){
+                //获取输入框里面的内容
+                let val1 = oTot[0].value;
+                let val2 = oTot[2].value;
+                if(!val1 || !val2)return;
+                oBop.forEach(function(ele){
+                    ele.innerHTML = ele.innerHTML.split(val1).join(val2);
+                });
+                //清除输入框的内容
+                oTot[0].value = "";
+                oTot[2].value = "";
+            }
+            //重置按钮的点击
+            oTot[4].onclick = function(){
+                oBop.forEach(function(ele,i){
+                    ele.innerHTML = arr[i];
+                });
+                //清除输入框内容
+                oTot[0].value = "";
+                oTot[2].value = "";
+            }
+        })()
+        
+    </script>
+</body>
+</html>
